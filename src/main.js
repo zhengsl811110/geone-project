@@ -4,11 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.css'
 import 'material-design-icons/iconfont/material-icons.css'
+import VueMaterial from '@/components/vue-material'
+import '@/components/vue-material/vue-material.css'
 
-Vue.use(VueMaterial);
+Vue.use(VueMaterial)
+
 
 Vue.material.registerTheme({
   default: {
