@@ -1,14 +1,16 @@
 <template>
-  <div class="build">
-    <div>
-      <div class="divider" v-for="item  in maxLength"></div>
-    </div>
-    <div v-for="(val, key) in buildingList" :key="key" class="row">
-      <div class="left">
-        <floor :floorNum="key+'楼'"></floor>
+  <div class="build-container">
+    <div class="build-content">
+      <div>
+        <div class="divider" v-for="item  in maxLength"></div>
       </div>
-      <div class="right">
-        <flat v-for="floor in val" :flatName="floor.attribute.FlatName" :key="floor.id"></flat>
+      <div v-for="(val, key) in buildingList" :key="key" class="row">
+        <div class="left">
+          <floor :floorNum="key+'楼'"></floor>
+        </div>
+        <div class="right">
+          <flat v-for="floor in val" :flatName="floor.attribute.FlatName" :key="floor.id"></flat>
+        </div>
       </div>
     </div>
   </div>
@@ -24,7 +26,7 @@ export default {
     buildingList: Object
   },
   computed: {
-    maxLength(){
+    maxLength() {
       let maxFlatLength = 0,
         buildingList = this.buildingList;
       for (var item in buildingList) {
@@ -32,7 +34,7 @@ export default {
           maxFlatLength = buildingList[item].length;
         }
       }
-      return  maxFlatLength + 1;
+      return maxFlatLength + 1;
     }
   },
   components: {
@@ -51,35 +53,38 @@ export default {
   #{$property}: calc(#{$expression});
 }
 
-.build {
+.build-container {
   @include calc(height, "100% - 128px");
-  overflow: auto;
-  padding: 4px;
-  .divider {
-    float: left;
-    height: 2px;
-    width: 68px;
-    margin-right: 2px;
-    background: #555555;
-  }
-  .row {
-    overflow: hidden;
-    zoom: 1;
-    clear: both;
-    .left {
+  overflow: hidden;
+  .build-content {
+    padding: 4px;
+    overflow: auto;
+    .divider {
       float: left;
-      width: 64px;
-      button {
-        margin: 4px 0 0 1px;
-      }
+      height: 2px;
+      width: 68px;
+      margin-right: 2px;
+      background: #555555;
     }
-    .right {
-      float: left;
-      @include calc(width, "100% - 64px");
-      padding: 0 4px;
-      text-align: left;
-      button {
-        margin-top: 4px;
+    .row {
+      overflow: hidden;
+      zoom: 1;
+      clear: both;
+      .left {
+        float: left;
+        width: 64px;
+        button {
+          margin: 4px 0 0 1px;
+        }
+      }
+      .right {
+        float: left;
+        @include calc(width, "100% - 64px");
+        padding: 0 4px;
+        text-align: left;
+        button {
+          margin-top: 4px;
+        }
       }
     }
   }

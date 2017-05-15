@@ -1,0 +1,77 @@
+<template>
+  <div class="app-viewport">
+    <md-button class="md-raised md-accent" @click.native="toggleRightSidenav">Toggle right</md-button>
+    <iframe frameborder="0" class="iframe" src="http://192.168.84.23/maptest/"></iframe>
+    <md-sidenav class="md-right" ref="rightSidenav"  :mdBackdrop="false" :width='540'  >
+      <md-toolbar class="md-medium">
+        <div class="md-toolbar-container">
+          <h3 class="md-title">楼盘表</h3>
+          <span style="flex: 1"></span>
+          <md-button class="md-icon-button" @click.native="closeRightSidenav">
+            <md-icon>close</md-icon>
+          </md-button>
+        </div>
+        <div class="md-toolbar-container">
+
+        </div>
+      </md-toolbar>
+      <building :buildingList="buildingList"></building>
+    </md-sidenav>
+  </div>
+</template>
+
+<script>
+import Building from '@/views/building';
+
+import Server from '@/server';
+import Adapter from '@/adapter';
+
+export default {
+  name: 'hello',
+  data() {
+    return {
+      buildingList:{}
+    }
+  },
+  components:{
+    Building
+  },
+  mounted() {
+    let _this=this;
+    Server.get({ url: 'http://58.210.9.131/jsDataCenter/Q.ashx?DBTag=ghfzjc&xKey=buildingServiceKey&x=57458.788137860087&y=48838.5127184494' }).then(function (res) {
+      let json = Adapter.buildingTable(res.data);
+      _this.buildingList=json;
+    });
+  },
+  methods: {
+    toggleRightSidenav() {
+      this.$refs.rightSidenav.toggle();
+    },
+    closeRightSidenav() {
+      this.$refs.rightSidenav.close();
+    }
+  }
+}
+
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang='scss' scoped>
+.app-viewport {
+  height: 100%;
+  width: 100%;
+  .iframe {
+    height: 100% !important;
+    width: 100%;
+  }
+  .md-raised {
+    position: absolute;
+    z-index: 999999;
+  }
+  .md-sidenav {
+    .md-sidenav-backdrop {
+      display: none !important;
+    }
+  }
+}
+</style>
